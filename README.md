@@ -26,3 +26,39 @@ Project layout
 Notes
 - This MVP is a starting point. We will expand with NTFS/MFT recovery, previews/filters, reports, and packaging to .exe using PyInstaller.
 
+## CLI Dashboards (Windows + Linux)
+
+This project also includes a cross-platform, menu-driven dashboard to help you run safe data recovery operations.
+
+Files:
+- FastDataRecovery.ps1 — Windows PowerShell dashboard
+- FastDataRecovery.sh — Linux Bash dashboard
+
+Safety first
+- Image failing drives first (ddrescue on Linux) and recover from the image.
+- Only run repair tools after the data is secured.
+
+Quick start (Windows)
+- Open PowerShell as Administrator.
+- Temporarily allow scripts in this session:
+  Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+- Run the dashboard:
+  .\FastDataRecovery.ps1
+
+Quick start (Linux)
+- Make executable and run as root:
+  chmod +x FastDataRecovery.sh
+  sudo ./FastDataRecovery.sh
+
+Requirements
+Windows:
+- smartmontools (smartctl) for SMART checks (e.g. choco install smartmontools)
+- TestDisk/PhotoRec: place testdisk_win.exe and photorec_win.exe in this folder or install via package
+
+Linux (Debian/Ubuntu):
+- sudo apt update && sudo apt install -y gddrescue testdisk photorec smartmontools ntfs-3g exfatprogs e2fsprogs xfsprogs btrfs-progs kpartx util-linux
+
+Outputs
+- Reports are written to ./reports
+- Temporary logs under ./logs
+
