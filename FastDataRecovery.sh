@@ -194,30 +194,81 @@ report_menu() {
   pause
 }
 
+quick_recovery_menu() {
+  while true; do
+    clear
+    info "Quick Recovery"
+    echo "Choose a recovery type:"
+    echo "  1) Deleted Recovery (PhotoRec)"
+    echo "  2) Complete Recovery (guided wizard)"
+    echo "  3) Lost Partition Recovery (TestDisk)"
+    echo "  4) Digital Media Recovery (PhotoRec, media file types)"
+    echo "  0) Back"
+    read -r -p "Enter choice: " sel
+    case "$sel" in
+      1)
+        echo "Tip: In PhotoRec, limit file types for speed."
+        launch_photorec
+        ;;
+      2)
+        while true; do
+          clear
+          info "Complete Recovery - Guided Wizard"
+          echo "  1) SMART health check"
+          echo "  2) Image with ddrescue"
+          echo "  3) Launch TestDisk"
+          echo "  4) Launch PhotoRec"
+          echo "  0) Back"
+          read -r -p "Enter choice: " c
+          case "$c" in
+            1) smart_menu ;;
+            2) imaging_menu ;;
+            3) launch_testdisk ;;
+            4) launch_photorec ;;
+            0) break ;;
+            *) warn "Invalid selection"; sleep 1 ;;
+          esac
+        done
+        ;;
+      3)
+        launch_testdisk
+        ;;
+      4)
+        echo "Tip: In PhotoRec, use File Opt to select photos/videos only."
+        launch_photorec
+        ;;
+      0) break ;;
+      *) warn "Invalid selection"; sleep 1 ;;
+    esac
+  done
+}
+
 menu() {
   while true; do
     clear
     info "Fast Data Recovery - Linux CLI Dashboard"
     echo "Select an option:"
-    echo "  1) List disks (safe)"
-    echo "  2) SMART health check (smartctl)"
-    echo "  3) Image drive with ddrescue"
-    echo "  4) Mount image read-only"
-    echo "  5) Launch TestDisk"
-    echo "  6) Launch PhotoRec"
-    echo "  7) Filesystem repair (guarded)"
-    echo "  8) Generate disk report to file"
+    echo "  1) Quick Recovery (Deleted, Complete, Lost Partition, Digital Media)"
+    echo "  2) List disks (safe)"
+    echo "  3) SMART health check (smartctl)"
+    echo "  4) Image drive with ddrescue"
+    echo "  5) Mount image read-only"
+    echo "  6) Launch TestDisk"
+    echo "  7) Launch PhotoRec"
+    echo "  8) Filesystem repair (guarded)"
+    echo "  9) Generate disk report to file"
     echo "  0) Exit"
     read -r -p "Enter choice: " sel
     case "$sel" in
-      1) list_disks; pause ;;
-      2) smart_menu ;;
-      3) imaging_menu ;;
-      4) mount_image_menu ;;
-      5) launch_testdisk ;;
-      6) launch_photorec ;;
-      7) repair_fs_menu ;;
-      8) report_menu ;;
+      1) quick_recovery_menu ;;
+      2) list_disks; pause ;;
+      3) smart_menu ;;
+      4) imaging_menu ;;
+      5) mount_image_menu ;;
+      6) launch_testdisk ;;
+      7) launch_photorec ;;
+      8) repair_fs_menu ;;
+      9) report_menu ;;
       0) break ;;
       *) warn "Invalid selection"; sleep 1 ;;
     esac

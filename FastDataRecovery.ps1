@@ -228,28 +228,79 @@ function Open-Readme {
     if (Test-Path -LiteralPath $p) { Start-Process $p } else { Write-WarnLine 'README.md not found in script folder.' }
 }
 
+function Wizard-Complete-Recovery {
+    while ($true) {
+        Clear-Host
+        Write-Title 'Complete Recovery - Guided Wizard'
+        Write-Host 'Recommended steps:'
+        Write-Host '  1) SMART health check (identify failing drives).'
+        Write-Host '  2) If any issues: image with ddrescue (Linux).'
+        Write-Host '  3) Work on the image: TestDisk (partitions) or PhotoRec (files).'
+        Write-Host ''
+        Write-Host 'Select action:'
+        Write-Host '  1) Run SMART check now'
+        Write-Host '  2) View Linux imaging instructions (README)'
+        Write-Host '  3) Launch TestDisk'
+        Write-Host '  4) Launch PhotoRec'
+        Write-Host '  0) Back'
+        $c = Read-Host 'Enter choice'
+        switch ($c) {
+            '1' { Run-SMART }
+            '2' { Open-Readme; Pause-Enter }
+            '3' { Launch-TestDisk }
+            '4' { Launch-PhotoRec }
+            '0' { return }
+            default { Write-WarnLine 'Invalid selection.'; Start-Sleep -Seconds 1 }
+        }
+    }
+}
+
+function Quick-Recovery-Menu {
+    while ($true) {
+        Clear-Host
+        Write-Title 'Quick Recovery'
+        Write-Host 'Choose a recovery type:'
+        Write-Host '  1) Deleted Recovery (PhotoRec)'
+        Write-Host '  2) Complete Recovery (guided wizard)'
+        Write-Host '  3) Lost Partition Recovery (TestDisk)'
+        Write-Host '  4) Digital Media Recovery (PhotoRec, select media file types)'
+        Write-Host '  0) Back'
+        $sel = Read-Host 'Enter choice'
+        switch ($sel) {
+            '1' { Write-Host 'Tip: Choose only needed file types in PhotoRec for speed.' -ForegroundColor Gray; Launch-PhotoRec }
+            '2' { Wizard-Complete-Recovery }
+            '3' { Launch-TestDisk }
+            '4' { Write-Host 'Tip: In PhotoRec, use File Opt to select photos/videos only.' -ForegroundColor Gray; Launch-PhotoRec }
+            '0' { return }
+            default { Write-WarnLine 'Invalid selection.'; Start-Sleep -Seconds 1 }
+        }
+    }
+}
+
 function Main-Menu {
     while ($true) {
         Clear-Host
         Write-Title 'Fast Data Recovery - Windows CLI Dashboard'
         Write-Host 'Select an option:'
-        Write-Host '  1) List disks (safe)'
-        Write-Host '  2) SMART health check (smartctl)'
-        Write-Host '  3) Launch TestDisk (partition recovery)'
-        Write-Host '  4) Launch PhotoRec (file carving)'
-        Write-Host '  5) Volume check/repair (guarded)'
-        Write-Host '  6) Generate disk report to file'
-        Write-Host '  7) Open README'
+        Write-Host '  1) Quick Recovery (Deleted, Complete, Lost Partition, Digital Media)'
+        Write-Host '  2) List disks (safe)'
+        Write-Host '  3) SMART health check (smartctl)'
+        Write-Host '  4) Launch TestDisk (partition recovery)'
+        Write-Host '  5) Launch PhotoRec (file carving)'
+        Write-Host '  6) Volume check/repair (guarded)'
+        Write-Host '  7) Generate disk report to file'
+        Write-Host '  8) Open README'
         Write-Host '  0) Exit'
         $sel = Read-Host 'Enter choice'
         switch ($sel) {
-            '1' { Show-Disks; Pause-Enter }
-            '2' { Run-SMART }
-            '3' { Launch-TestDisk }
-            '4' { Launch-PhotoRec }
-            '5' { Volume-Repair-Menu }
-            '6' { Generate-Report }
-            '7' { Open-Readme; Pause-Enter }
+            '1' { Quick-Recovery-Menu }
+            '2' { Show-Disks; Pause-Enter }
+            '3' { Run-SMART }
+            '4' { Launch-TestDisk }
+            '5' { Launch-PhotoRec }
+            '6' { Volume-Repair-Menu }
+            '7' { Generate-Report }
+            '8' { Open-Readme; Pause-Enter }
             '0' { break }
             default { Write-WarnLine 'Invalid selection.'; Start-Sleep -Seconds 1 }
         }

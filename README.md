@@ -62,3 +62,18 @@ Outputs
 - Reports are written to ./reports
 - Temporary logs under ./logs
 
+GUI Dashboard (.exe and cross-platform)
+- Run directly with Python:
+  python gui_dashboard.py
+- Build a Windows .exe:
+  1) python -m venv .venv; .\.venv\Scripts\Activate.ps1
+  2) pip install -r requirements.txt
+  3) .\build_exe.ps1
+- After building, launch ./dist/FastDataRecoveryGUI.exe
+
+GUI notes
+- The GUI provides four tiles matching the requested categories:
+  Deleted Recovery, Complete Recovery (guided), Lost Partition Recovery, Digital Media Recovery.
+- It launches TestDisk/PhotoRec if present. On Windows, place testdisk_win.exe and photorec_win.exe beside the exe or add to PATH.
+- Use SMART to assess health before recovery; image failing drives first.
+
