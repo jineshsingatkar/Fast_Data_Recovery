@@ -1,6 +1,7 @@
 README.md
 pyproject.toml
 src/recoverypro/__init__.py
+src/recoverypro/__main__.py
 src/recoverypro/carver.py
 src/recoverypro/cli.py
 src/recoverypro.egg-info/PKG-INFO
