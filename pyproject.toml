@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "recoverypro"
+version = "0.1.0"
+description = "Fast signature-based data recovery (MVP)"
+authors = [{ name = "Jinesh" }]
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+  "typer>=0.15",
+  "rich>=13",
+  "python-magic-bin>=0.4.14; platform_system == 'Windows'",
+  "Pillow>=10",
+  "PyPDF2>=3.0.0",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0.0"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+

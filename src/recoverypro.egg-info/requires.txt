@@ -1,0 +1,10 @@
+typer>=0.15
+rich>=13
+Pillow>=10
+PyPDF2>=3.0.0
+
+[:platform_system == "Windows"]
+python-magic-bin>=0.4.14
+
+[dev]
+pytest>=8.0.0
